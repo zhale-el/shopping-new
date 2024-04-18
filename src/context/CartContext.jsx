@@ -15,11 +15,11 @@ export function CartProvider({ children }) {
 
   function getProductQuantity(id) {
     const quantity = cartProducts.find((item) => item.id === id)?.quantity;
-
     if (quantity === undefined) {
       return 0;
+    } else {
+      quantity;
     }
-    return quantity;
   }
 
   function addItemToCart(id) {
@@ -32,6 +32,27 @@ export function CartProvider({ children }) {
         cartProducts.map((item) =>
           item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         )
+      );
+    }
+  }
+
+  function deleteFromCart(id) {
+    setCartProducts((cartProducts) =>
+      cartProducts.filter((item) => {
+        return item.id != id;
+      })
+    );
+  }
+  function removeItemFromCart(id) {
+    const quantity = getProductQuantity(id);
+
+    if (quantity === 1) {
+      deleteFromCart(id);
+    } else {
+      setCartProducts(
+        cartProducts.map((item) => {
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item;
+        })
       );
     }
   }
