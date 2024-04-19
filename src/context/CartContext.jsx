@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { getProductData } from "../data/items";
+
 export const CartContext = createContext({
   items: [],
   getProductQuantity: () => {},
@@ -8,7 +9,6 @@ export const CartContext = createContext({
   deleteFromCart: () => {},
   getTotalAmount: () => {},
 });
-console.log(CartContext);
 
 export function CartProvider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
@@ -18,7 +18,7 @@ export function CartProvider({ children }) {
     if (quantity === undefined) {
       return 0;
     } else {
-      quantity;
+      return quantity;
     }
   }
 
@@ -50,9 +50,9 @@ export function CartProvider({ children }) {
       deleteFromCart(id);
     } else {
       setCartProducts(
-        cartProducts.map((item) => {
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item;
-        })
+        cartProducts.map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
       );
     }
   }
