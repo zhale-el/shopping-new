@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Navbar as NavbarBs, Button, Modal } from "react-bootstrap";
 import { IoCartOutline } from "react-icons/io5";
+import { CartContext } from "../../context/CartContext";
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
+  const cart = useContext(CartContext);
+
+  let productsCount = cart.items.reduce(
+    (sum, product) => {
+      return sum + product.quantity;
+    },
+
+    0
+  );
 
   const handelShow = () => {
     setShowModal(true);
@@ -21,6 +31,7 @@ const Navbar = () => {
             variant="btn btn-outline-secondary"
             className="text-white"
           >
+            ( {productsCount})
             <IoCartOutline className="mx-2 " />
             سبد خرید
           </Button>
