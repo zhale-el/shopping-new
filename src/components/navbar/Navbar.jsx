@@ -2,11 +2,12 @@ import React, { useState, useContext } from "react";
 import { Navbar as NavbarBs, Button, Modal } from "react-bootstrap";
 import { IoCartOutline } from "react-icons/io5";
 import { CartContext } from "../../context/CartContext";
+import CartProduct from "../cartProduct/CartProduct";
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const cart = useContext(CartContext);
 
-  let productsCount = cart.items.reduce(
+  const productsCount = cart.items.reduce(
     (sum, product) => {
       return sum + product.quantity;
     },
@@ -43,9 +44,32 @@ const Navbar = () => {
         contentClassName="card-bg"
         dir="rtl"
       >
-        <Modal.Header closeButton closeVariant="white">
-          <Modal.Title>سبد خرید</Modal.Title>
-          <Modal.Body>محصول</Modal.Body>
+        <Modal.Header>
+          <Modal.Body>
+            {productsCount > 0 ? (
+              <>
+                <h3 className="mb-4">سبد خرید</h3>
+                {cart.items.map((item) => (
+                  <CartProduct
+                    key={item.id}
+                    id={item.id}
+                    quantity={item.quantity}
+                  ></CartProduct>
+                ))}
+              </>
+            ) : (
+              <>
+                <h3>سبد خرید خالی است.</h3>
+              </>
+            )}
+            <Button
+              onClick={handelClose}
+              variant="btn btn-outline-secondary"
+              className="mt-4 mx-3 text-white"
+            >
+              بستن
+            </Button>
+          </Modal.Body>
         </Modal.Header>
       </Modal>
     </>
