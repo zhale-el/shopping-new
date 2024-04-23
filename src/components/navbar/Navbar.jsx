@@ -56,6 +56,7 @@ const Navbar = () => {
                     quantity={item.quantity}
                   ></CartProduct>
                 ))}
+                <h3>مجموع قیمت:{cart.getTotalAmount()} تومان</h3>
               </>
             ) : (
               <>
